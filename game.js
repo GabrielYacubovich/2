@@ -1,8 +1,13 @@
-﻿  // game.js
+  // game.js
   const canvas = document.getElementById('game-canvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  // Resize canvas on window resize
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
   const keys = {};
   canvas.addEventListener('click', (event) => {
     const buttonWidth = 150;
