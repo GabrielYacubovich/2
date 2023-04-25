@@ -293,6 +293,7 @@ function getRandomSpaceFact() {
       let gameOverText = 'Game Over';
       let gameOverTextWidth = ctx.measureText(gameOverText).width;
       ctx.fillText(gameOverText, canvas.width / 2 - gameOverTextWidth / 2, canvas.height / 2 -160);
+      
       ctx.font = "40px Joystix";
       const highScoreText = `High Score: ${getHighScore()}`;
       const highScoreTextWidth = ctx.measureText(highScoreText).width;
@@ -306,7 +307,8 @@ function getRandomSpaceFact() {
     let spaceFactText = `Space Fact: ${randomSpaceFact}`;
     let spaceFactTextWidth = ctx.measureText(spaceFactText).width;
     ctx.fillText(spaceFactText, canvas.width / 2 - spaceFactTextWidth / 2, canvas.height / 2 + 280);
-  
+    drawRestartButton(ctx); // Add this line to show the button on the game over screen
+
       let playAgainTextVisible = !flashText;
       if (playAgainTextVisible) {
         ctx.font = '18px Joystix';
