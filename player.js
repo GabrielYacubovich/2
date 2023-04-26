@@ -1,4 +1,4 @@
-﻿// player.js
+// player.js
 class Player {
   constructor() {
     this.x = canvas.width / 2;
@@ -26,11 +26,8 @@ class Player {
     this.backfrontShooting = false;
     this.backfrontShootingTime = 0;
     this.backfrontShootingDuration = 10000; 
-   
-        
   }
   resetPowerupEffects() {
-    console.log("Resetting powerup effects");
     this.invulnerable = false;
     this.doubleShooting = false;
   }
@@ -46,10 +43,6 @@ class Player {
       }
     }
   }
-  
-
-  
-  
   reset() {
     this.x = canvas.width / 2;
     this.y = canvas.height / 2;
@@ -66,10 +59,7 @@ class Player {
     this.lives = 3;
     this.bulletSpeed = this.originalBulletSpeed;
     this.backfrontShooting = false;
-
   }
-  
-
   update() {
     this.handleMovement();
     this.handleShooting();
@@ -82,12 +72,10 @@ class Player {
       this.bulletSpeed = this.originalBulletSpeed;
       this.doubleShootingLost = true;
     }
-    
     if (this.x < 0) this.x = canvas.width;
     if (this.x > canvas.width) this.x = 0;
     if (this.y < 0) this.y = canvas.height;
     if (this.y > canvas.height) this.y = 0;
-
     if (player.collisionDelay > 0) {
       player.collisionDelay--;
     }
@@ -97,8 +85,6 @@ class Player {
       }
     }
   }
-  
-
   draw(ctx) {
     ctx.save();
     ctx.translate(this.x, this.y);
@@ -121,10 +107,8 @@ class Player {
     ctx.stroke();
     ctx.restore();
   }
-
   handleMovement() {
     const angle = this.rotation;
-
     if (keys['ArrowUp']) {
       this.thrustX += this.acceleration * Math.sin(angle);
       this.thrustY -= this.acceleration * Math.cos(angle);
@@ -132,10 +116,8 @@ class Player {
       this.thrustX *= 0.99;
       this.thrustY *= 0.99;
     }
-  
     this.x += this.thrustX;
     this.y += this.thrustY;
-  
     if (keys['ArrowRight']) {
       this.rotation += 0.1;
     }
@@ -143,7 +125,6 @@ class Player {
       this.rotation -= 0.1;
     }
   }
-  
   handleShooting() {
     if (keys['Space'] && !this.shooting) {
       this.shooting = true;
@@ -154,37 +135,26 @@ class Player {
       setTimeout(() => (this.shooting = false), 250);
     }
   }
-  
-  
-  
-  
   handleBullets() {
     for (let i = this.bullets.length - 1; i >= 0; i--) {
       const bullet = this.bullets[i];
       bullet.update();
-  
       if (bullet.offscreen()) {
         this.bullets.splice(i, 1);
       }
     }
   }
-  
-  
-  
   checkInvulnerability() {
     if (this.invulnerable && Date.now() - this.invulnerabilityTime > 10000) {
       this.invulnerable = false;
     }
   }
-  
   checkDoubleShooting() {
     if (this.doubleShooting && Date.now() - this.doubleShootingTime > 10000) {
       this.doubleShooting = false;
       this.bulletSpeed = this.originalBulletSpeed;
     }
   }
-  
-  
   checkCollisionWithAsteroid(asteroid) {
     const dx = this.x - asteroid.x;
     const dy = this.y - asteroid.y;
@@ -192,25 +162,19 @@ class Player {
     const minDistance = (this.width / 2) + (asteroid.size / 2);
     return distance < minDistance;
   }
-  
   checkCollisionWithPowerup(powerup) {
     const dx = this.x - powerup.x;
     const dy = this.y - powerup.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-  
     const minDistance = (this.width / 2) + (powerup.width / 2);
     return distance < minDistance;
   }
-  
   checkCollisionWithBullet(bullet) {
     const dx = this.x - bullet.x;
     const dy = this.y - bullet.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     return distance < this.width / 2 + bullet.size / 2;
   }
-  
-  
-  
   checkCollisionWithEnemyBullet(enemyBullet) {
     const dx = this.x - enemyBullet.x;
     const dy = this.y - enemyBullet.y;
@@ -222,10 +186,7 @@ class Player {
     }
     return false;
   }
-  
-  
   }
-  
   function isColliding(rect1, rect2) {
     return (
       rect1.x < rect2.x + rect2.width &&
