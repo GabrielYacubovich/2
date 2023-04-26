@@ -464,7 +464,6 @@ function getRandomSpaceFact() {
   
   
   function gameOver() {
-    console.log('Game Over');
     gameOverScreen = true;
     saveHighScore(playerName, score);
 
