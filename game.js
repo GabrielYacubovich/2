@@ -29,7 +29,7 @@ window.addEventListener('resize', () => {
     const buttonX = canvas.width - buttonWidth - 10;
     const buttonY = 10;
     const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
+    const x = event.clientX - rect.left; 
     const y = event.clientY - rect.top;
     if (x >= buttonX && x <= buttonX + buttonWidth && y >= buttonY && y <= buttonY + buttonHeight) {
       playerName = getPlayerName();
