@@ -119,10 +119,10 @@ class Player {
     this.x += this.thrustX;
     this.y += this.thrustY;
     if (keys['ArrowRight']) {
-      this.rotation += 0.1;
+      this.rotation += 0.05;
     }
     if (keys['ArrowLeft']) {
-      this.rotation -= 0.1;
+      this.rotation -= 0.05;
     }
   }
   handleShooting() {
