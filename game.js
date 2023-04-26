@@ -4,6 +4,7 @@
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   let onWelcomeScreen = true; // Step 1
+
   // Resize canvas on window resize
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
@@ -15,9 +16,11 @@ window.addEventListener('resize', () => {
     const buttonHeight = 40;
     const buttonX = canvas.width - buttonWidth - 10;
     const buttonY = 10;
+  
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
+  
     if (x >= buttonX && x <= buttonX + buttonWidth && y >= buttonY && y <= buttonY + buttonHeight) {
       playerName = getPlayerName();
       restartGame();
@@ -28,9 +31,11 @@ window.addEventListener('resize', () => {
     const buttonHeight = 40;
     const buttonX = canvas.width - buttonWidth - 10;
     const buttonY = 10;
+  
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
+  
     if (x >= buttonX && x <= buttonX + buttonWidth && y >= buttonY && y <= buttonY + buttonHeight) {
       playerName = getPlayerName();
       restartGame();
@@ -39,6 +44,7 @@ window.addEventListener('resize', () => {
       onWelcomeScreen = false;
     }
   });
+  
   window.addEventListener('keydown', (event) => {
     keys[event.code] = true;
     if (event.code === 'KeyP') {
@@ -65,6 +71,7 @@ window.addEventListener('resize', () => {
   let score = 0;
   let level = 1;
   let lives = 3;
+  
   let textFlashInterval = null;
 let flashText = false;
 let flashTextCount = 0;
@@ -83,6 +90,7 @@ function getRandomSpaceFact() {
   function togglePause() {
     paused = !paused;
   }
+
   class Bullet {
     constructor(x, y, rotation, doubleShooting, isPlayerBullet = true, type = "", bulletSpeed = 10) {
       this.x = x;
@@ -95,10 +103,12 @@ function getRandomSpaceFact() {
       this.isPlayerBullet = isPlayerBullet;
       this.type = type; 
     }
+
     update() {
       this.x += this.speed * Math.sin(this.rotation);
       this.y -= this.speed * Math.cos(this.rotation);
     }
+
     draw(ctx) {
       ctx.save();
       ctx.translate(this.x, this.y);
@@ -110,6 +120,7 @@ function getRandomSpaceFact() {
       ctx.fill();
       ctx.restore();
     }
+
     offscreen() {
       return (
         this.x < 0 ||
@@ -123,17 +134,21 @@ function getRandomSpaceFact() {
     const oldScoreMultiple = Math.floor(score / 1000);
     score += points;
     const newScoreMultiple = Math.floor(score / 1000);
+  
     if (newScoreMultiple > oldScoreMultiple) {
       lives++;
     }
   }
+  
   function drawRestartButton(ctx) {
     const buttonWidth = 150;
     const buttonHeight = 40;
     const buttonX = canvas.width - buttonWidth - 10;
     const buttonY = 10;
+  
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+  
     ctx.font = '20px Joystix';
     ctx.fillStyle = 'white';
     const buttonText = 'Change Player';
@@ -164,14 +179,18 @@ function getRandomSpaceFact() {
         x = Math.random() * canvas.width;
         y = Math.random() * canvas.height;
       } while (Math.sqrt((x - player.x) ** 2 + (y - player.y) ** 2) < 300); 
+
       const speed = 1 + Math.random() * 2;
       const rotation = Math.random() * Math.PI * 2;
+
       asteroids.push(new Asteroid(x, y, size, speed, rotation));
+
       asteroidTimer = 600;
     } else {
       asteroidTimer--;
     }
   }
+
   function spawnEnemy() {
     if (enemyTimer <= 0) {
       const size = 30;
@@ -201,11 +220,13 @@ function getRandomSpaceFact() {
       }
     }
   }
+    
   function spawnPowerups() {
     if (powerupTimer <= 0) {
       const x = Math.random() * canvas.width;
       const y = Math.random() * canvas.height;
       const powerupTypes = ['invulnerability', 'extraLife', 'doubleShooting', 'slowMotion','backfront'];
+
       const type = powerupTypes[Math.floor(Math.random() * powerupTypes.length)];
       powerups.push(new Powerup(x, y, type));
       powerupTimer = 800;
@@ -213,7 +234,10 @@ function getRandomSpaceFact() {
       powerupTimer--;
     }
   }
+  
   let gameOverScreen = false;
+  
+
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (onWelcomeScreen) { // Step 4
@@ -228,6 +252,7 @@ function getRandomSpaceFact() {
       spawnEnemy();
       shootEnemyBullets(); 
       spawnPowerups();
+      
       // Update and draw asteroids
       for (const asteroid of asteroids) {
         asteroid.update();
@@ -243,6 +268,7 @@ function getRandomSpaceFact() {
       powerup.update(player);
       powerup.draw(ctx);
       }
+      
       // Update and draw player bullets
       for (const bullet of player.bullets) {
         bullet.update();
@@ -296,6 +322,7 @@ function getRandomSpaceFact() {
         }
       }
       drawRestartButton(ctx);
+
       checkCollisions();
       if (lives <= 0) {
         gameOver();
@@ -306,6 +333,7 @@ function getRandomSpaceFact() {
       let gameOverText = 'Game Over';
       let gameOverTextWidth = ctx.measureText(gameOverText).width;
       ctx.fillText(gameOverText, canvas.width / 2 - gameOverTextWidth / 2, canvas.height / 2 -160);
+      
       ctx.font = "40px Joystix";
       const highScoreText = `High Score: ${getHighScore()}`;
       const highScoreTextWidth = ctx.measureText(highScoreText).width;
@@ -320,6 +348,7 @@ function getRandomSpaceFact() {
     let spaceFactTextWidth = ctx.measureText(spaceFactText).width;
     ctx.fillText(spaceFactText, canvas.width / 2 - spaceFactTextWidth / 2, canvas.height / 2 + 280);
     drawRestartButton(ctx); // Add this line to show the button on the game over screen
+
       let playAgainTextVisible = !flashText;
       if (playAgainTextVisible) {
         ctx.font = '18px Joystix';
@@ -333,8 +362,12 @@ function getRandomSpaceFact() {
       if (keys['KeyN']) {
         restartGame();
       }
+      
     }
+    
   }
+
+
   function gameLoop() {
   if (!paused) {
     update();
@@ -345,10 +378,12 @@ function getRandomSpaceFact() {
     player.takeDamage(1, 'asteroid');
     player.resetPowerupEffects(); 
   }
+
   function checkCollisions() {
     // Check collisions between player and asteroids
     for (const asteroid of asteroids) {
       if (player.checkCollisionWithAsteroid(asteroid) && !player.invulnerable && player.collisionDelay === 0) {
+        
         respawnPlayer();
         player.collisionDelay = 80; // Set delay after losing a life
         if (player.doubleShooting && !player.doubleShootingLost) { 
@@ -360,6 +395,7 @@ function getRandomSpaceFact() {
          break; // Exit the loop after the first collision is detected
       }
     }
+  
     for (const bullet of enemyBullets) {
       if (player.checkCollisionWithBullet(bullet)) {
         bullet.markForDeletion = true;
@@ -414,20 +450,27 @@ function getRandomSpaceFact() {
     const highScoreKey = "highScore";
     const currentHighScore = localStorage.getItem(highScoreKey);
     const newHighScore = `${playerName.slice(0, 4)} ${score}`;
+  
     if (!currentHighScore || parseInt(currentHighScore.split(" ")[1]) < score) {
       localStorage.setItem(highScoreKey, newHighScore);
     }
   }
+
   function getHighScore() {
     const highScoreKey = "highScore";
     return localStorage.getItem(highScoreKey) || "N/A";
   }
+
+  
+  
   function gameOver() {
     console.log('Game Over');
     gameOverScreen = true;
     saveHighScore(playerName, score);
+
     // Add this line to get a random space fact
   randomSpaceFact = getRandomSpaceFact();
+
     textFlashInterval = setInterval(() => {
       flashText = !flashText;
       flashTextCount++;
@@ -435,7 +478,11 @@ function getRandomSpaceFact() {
         clearInterval(textFlashInterval);
       }
     }, 500); // Change this value to adjust the flashing speed
+    
+    
   }
+
+  
   function restartGame() {
     gameOverScreen = false;
     asteroids = [];
@@ -450,4 +497,6 @@ function getRandomSpaceFact() {
     enemyTimer = 400; 
     powerupTimer = 0;
  }
+  
+  
   gameLoop();
