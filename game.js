@@ -3,6 +3,8 @@
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  let onWelcomeScreen = true; // Step 1
+
   // Resize canvas on window resize
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
@@ -22,6 +24,24 @@ window.addEventListener('resize', () => {
     if (x >= buttonX && x <= buttonX + buttonWidth && y >= buttonY && y <= buttonY + buttonHeight) {
       playerName = getPlayerName();
       restartGame();
+    }
+  });
+  canvas.addEventListener('click', (event) => {
+    const buttonWidth = 150;
+    const buttonHeight = 40;
+    const buttonX = canvas.width - buttonWidth - 10;
+    const buttonY = 10;
+  
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+  
+    if (x >= buttonX && x <= buttonX + buttonWidth && y >= buttonY && y <= buttonY + buttonHeight) {
+      playerName = getPlayerName();
+      restartGame();
+    }
+    if (onWelcomeScreen && keys['Space']) { // check if spacebar is pressed and the game is on the welcome page
+      onWelcomeScreen = false;
     }
   });
   
@@ -135,7 +155,22 @@ function getRandomSpaceFact() {
     const buttonTextWidth = ctx.measureText(buttonText).width;
     ctx.fillText(buttonText, buttonX + buttonWidth / 2 - buttonTextWidth / 2, buttonY + buttonHeight / 2 + 6);
   }
-  
+  function drawWelcomeScreen() { // Step 3
+    ctx.font = '80px Joystix';
+    ctx.fillStyle = 'white';
+    let gameNameText = 'AsteroidsGPT';
+    let gameNameTextWidth = ctx.measureText(gameNameText).width;
+    ctx.fillText(gameNameText, canvas.width / 2 - gameNameTextWidth / 2, canvas.height / 2 -70);
+    ctx.font = '40px Joystix';
+    ctx.fillStyle = 'white';
+    let gameWhatText = 'a JS challenge with ChatGPT';
+    let gameWhatTextWidth = ctx.measureText(gameWhatText).width;
+    ctx.fillText(gameWhatText, canvas.width / 2 - gameWhatTextWidth / 2, canvas.height / 2);
+    ctx.font = '24px Joystix';
+    let pressSpacebarText = 'Press Spacebar to Play';
+    let pressSpacebarTextWidth = ctx.measureText(pressSpacebarText).width;
+    ctx.fillText(pressSpacebarText, canvas.width / 2 - pressSpacebarTextWidth / 2, canvas.height / 2 + 100);
+  }
   function spawnAsteroids() {
     if (asteroidTimer <= 0) {
       const size = 60;
@@ -205,7 +240,12 @@ function getRandomSpaceFact() {
 
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!gameOverScreen) {
+    if (onWelcomeScreen) { // Step 4
+      drawWelcomeScreen();
+      if (keys['Space']) {
+        onWelcomeScreen = false;
+      }
+    } else if (!gameOverScreen) {
       player.update();
       player.draw(ctx);
       spawnAsteroids();
