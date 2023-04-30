@@ -155,22 +155,47 @@ function getRandomSpaceFact() {
     const buttonTextWidth = ctx.measureText(buttonText).width;
     ctx.fillText(buttonText, buttonX + buttonWidth / 2 - buttonTextWidth / 2, buttonY + buttonHeight / 2 + 6);
   }
-  function drawWelcomeScreen() { // Step 3
-    ctx.font = '80px Joystix';
-    ctx.fillStyle = 'white';
-    let gameNameText = 'AsteroidsGPT';
-    let gameNameTextWidth = ctx.measureText(gameNameText).width;
-    ctx.fillText(gameNameText, canvas.width / 2 - gameNameTextWidth / 2, canvas.height / 2 -70);
-    ctx.font = '40px Joystix';
-    ctx.fillStyle = 'white';
-    let gameWhatText = 'a JS challenge with ChatGPT';
-    let gameWhatTextWidth = ctx.measureText(gameWhatText).width;
-    ctx.fillText(gameWhatText, canvas.width / 2 - gameWhatTextWidth / 2, canvas.height / 2);
-    ctx.font = '24px Joystix';
-    let pressSpacebarText = 'Press Spacebar to Play';
-    let pressSpacebarTextWidth = ctx.measureText(pressSpacebarText).width;
-    ctx.fillText(pressSpacebarText, canvas.width / 2 - pressSpacebarTextWidth / 2, canvas.height / 2 + 100);
-  }
+function drawWelcomeScreen() { // Step 3
+  ctx.font = '80px Joystix';
+  ctx.fillStyle = 'white';
+  let gameNameText = 'AsteroidsGPT';
+  let gameNameTextWidth = ctx.measureText(gameNameText).width;
+  ctx.fillText(gameNameText, canvas.width / 2 - gameNameTextWidth / 2, canvas.height / 2 - 70);
+  ctx.font = '40px Joystix';
+  ctx.fillStyle = 'white';
+  let gameWhatText = 'a JS challenge with ChatGPT';
+  let gameWhatTextWidth = ctx.measureText(gameWhatText).width;
+  ctx.fillText(gameWhatText, canvas.width / 2 - gameWhatTextWidth / 2, canvas.height / 2);
+  ctx.font = '24px Joystix';
+  let pressSpacebarText = 'Press Spacebar to Play';
+  let pressSpacebarTextWidth = ctx.measureText(pressSpacebarText).width;
+  ctx.fillText(pressSpacebarText, canvas.width / 2 - pressSpacebarTextWidth / 2, canvas.height / 2 + 180);
+  ctx.font = '20px Joystix';
+  ctx.fillStyle = 'blue';
+  let blueText = 'Life Up';
+  let blueTextWidth = ctx.measureText(blueText).width;
+  ctx.fillText(blueText, canvas.width / 2 - blueTextWidth / 2 - 100, canvas.height / 2 + 100);
+  ctx.font = '20px Joystix';
+  ctx.fillStyle = 'green';
+  let greenText = 'Invulnerable';
+  let greenTextWidth = ctx.measureText(greenText).width;
+  ctx.fillText(greenText, canvas.width / 2 - greenTextWidth / 2 - 200, canvas.height / 2 + 100);
+  ctx.font = '20px Joystix';
+  ctx.fillStyle = 'orange';
+  let orangeText = 'Fast Bullets';
+  let orangeTextWidth = ctx.measureText(orangeText).width;
+  ctx.fillText(orangeText, canvas.width / 2 - orangeTextWidth / 2, canvas.height / 2 + 100);
+  ctx.font = '20px Joystix';
+  ctx.fillStyle = 'purple';
+  let purpleText = 'Slow Mo';
+  let purpleTextWidth = ctx.measureText(purpleText).width;
+  ctx.fillText(purpleText, canvas.width / 2 - purpleTextWidth / 2 + 200, canvas.height / 2 + 100);
+  ctx.font = '20px Joystix';
+  ctx.fillStyle = 'pink';
+  let pinkText = '2x Bullets';
+  let pinkTextWidth = ctx.measureText(pinkText).width;
+  ctx.fillText(pinkText, canvas.width / 2 - pinkTextWidth / 2 + 100, canvas.height / 2 + 100);
+}
   function spawnAsteroids() {
     if (asteroidTimer <= 0) {
       const size = 60;
